@@ -45,6 +45,8 @@ public class VendorMachineServiceImpl implements VendorMachineService {
     @Override
     public Collection<Coin> getChangeFor(int pence) {
 
+        // Update Coins Values
+        refreshCoinRepo(pathToCoinRepo);
         List<Coin> changeReturn = new ArrayList<>();
 
         if(getChange(pence,true, changeReturn, false) ) {
