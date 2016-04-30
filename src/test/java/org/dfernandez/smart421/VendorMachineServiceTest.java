@@ -26,10 +26,26 @@ public class VendorMachineServiceTest {
 
 
     @Test
-    public void testChangeForZero() {
+    public void testChangeForZeroPence() {
 
         expectedChange = new ArrayList<>();
 
         assertThat(expectedChange, equalTo(service.getOptimalChangeFor(0)));
+    }
+
+    @Test
+    public void testChangeForOnePenny() {
+        expectedChange = new ArrayList<>();
+        expectedChange.add(Coin.ONE_PENNY);
+
+        assertThat(expectedChange, equalTo(service.getOptimalChangeFor(1)));
+    }
+
+    @Test
+    public void testChangeForTwoPence() {
+        expectedChange = new ArrayList<>();
+        expectedChange.add(Coin.TWO_PENCE);
+
+        assertThat(expectedChange, equalTo(service.getOptimalChangeFor(2)));
     }
 }

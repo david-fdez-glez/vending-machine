@@ -14,6 +14,15 @@ public class VendorMachineServiceImpl implements VendorMachineService {
 
         List<Coin> changeList = new ArrayList<>();
 
+        int amountLeft = pence;
+
+        for(Coin coin: Coin.values()){
+
+            while(amountLeft >= coin.getDenomination()) {
+                amountLeft -= coin.getDenomination();
+                changeList.add(coin);
+            }
+        }
         return changeList;
     }
 }
