@@ -17,8 +17,8 @@ import static org.junit.Assert.*;
 
 public class FileIOTest {
 
-    static final String COIN_INVENTORY_READ_PATH = "src/test/resources/coin-inventory-read.properties";
-    static final String COIN_INVENTORY_WRITE_PATH = "src/test/resources/coin-inventory-write.properties";
+    static final String COIN_INVENTORY_READ_PATH = "src/test/resources/coin-inventory-file-read.properties";
+    static final String COIN_INVENTORY_WRITE_PATH = "src/test/resources/coin-inventory-file-write.properties";
 
     List<String> expectedLines;
 
