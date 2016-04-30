@@ -1,5 +1,6 @@
 package org.dfernandez.smart421;
 
+import org.dfernandez.smart421.model.Coin;
 import org.dfernandez.smart421.util.FilesUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +8,9 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -69,6 +72,51 @@ public class FileIOTest {
         List<String> lines = FilesUtil.readAllLines(COIN_INVENTORY_WRITE_PATH);
 
         assertThat(expectedLines, equalTo(lines));
+
+    }
+
+
+    @Test
+    public void testReadCoinValues() {
+
+        Map<Coin, Integer> coinsExpected = new HashMap<>();
+        coinsExpected.put(Coin.ONE_POUND,1);
+        coinsExpected.put(Coin.FIFTY_PENCE,2);
+        coinsExpected.put(Coin.TWENTY_PENCE,3);
+        coinsExpected.put(Coin.TEN_PENCE,4);
+        coinsExpected.put(Coin.FIVE_PENCE,5);
+        coinsExpected.put(Coin.TWO_PENCE,6);
+        coinsExpected.put(Coin.ONE_PENNY,7);
+
+        Map<Coin, Integer> coinsResult = FilesUtil.readCoinsValuesFromFile(COIN_INVENTORY_READ_PATH);
+
+        assertEquals(coinsExpected, coinsResult);
+
+    }
+
+
+    @Test
+    public void testWriteCoinsValues() {
+
+        Map<Coin, Integer> coinsExpected = new HashMap<>();
+        coinsExpected.put(Coin.ONE_POUND,11);
+        coinsExpected.put(Coin.FIFTY_PENCE,22);
+        coinsExpected.put(Coin.TWENTY_PENCE,33);
+        coinsExpected.put(Coin.TEN_PENCE,44);
+        coinsExpected.put(Coin.FIVE_PENCE,55);
+        coinsExpected.put(Coin.TWO_PENCE,66);
+        coinsExpected.put(Coin.ONE_PENNY,77);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("100=11\n").append("50=22\n").append("20=33\n").append("10=44\n").append("5=55\n").append("2=66\n").append("1=77\n");
+
+
+        FilesUtil.writeCoinsValuesToFile(COIN_INVENTORY_WRITE_PATH, sb.toString());
+
+        Map<Coin, Integer> coinsResult = FilesUtil.readCoinsValuesFromFile(COIN_INVENTORY_WRITE_PATH);
+
+        assertEquals(coinsExpected, coinsResult);
+
 
     }
 

@@ -1,17 +1,22 @@
 package org.dfernandez.smart421.util;
 
 
+import org.dfernandez.smart421.model.Coin;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FilesUtil {
 
-   // private static final String COIN_INVENTORY_PATH = "src/test/resources/coin-inventory-read.properties";
-
+    /**
+     * I'm assuming the purpose for this test is not to validate the IO Operations
+     * This is why I'm not doing anything when I catch the errors
+     * @param path
+     * @return
+     */
     public static List<String> readAllLines(String path) {
         List<String> lines = new ArrayList<>();
         try {
@@ -30,5 +35,60 @@ public class FilesUtil {
         }  catch (IOException exception) {
             // TODO ERROR
         }
+    }
+
+
+
+    public static Map<Coin, Integer> readCoinsValuesFromFile(String path) {
+
+        Map<Coin,Integer> coins = new HashMap<>();
+
+        List<String> lines = new ArrayList<>();
+
+        lines = readAllLines(path);
+        String[] split;
+        Coin coin;
+        int denomination;
+
+        for(String st:lines) {
+          split = st.split("=");
+            switch (split[0]) {
+                case "100":
+                    coin = Coin.ONE_POUND;
+                    break;
+                case "50":
+                    coin = Coin.FIFTY_PENCE;
+                    break;
+                case "20":
+                    coin = Coin.TWENTY_PENCE;
+                    break;
+                case "10":
+                    coin = Coin.TEN_PENCE;
+                    break;
+                case "5":
+                    coin = Coin.FIVE_PENCE;
+                    break;
+                case "2":
+                    coin = Coin.TWO_PENCE;
+                    break;
+                case "1":
+                    coin = Coin.ONE_PENNY;
+                    break;
+                default:
+                    coin = Coin.ONE_POUND;
+            }
+            denomination = Integer.parseInt(split[1]);
+            coins.put(coin,denomination);
+        }
+
+
+        return coins;
+    }
+
+
+
+    public static void writeCoinsValuesToFile(String path, String content) {
+
+        writeToTextFile(path, content);
     }
 }
