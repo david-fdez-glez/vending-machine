@@ -134,4 +134,42 @@ public class VendorMachineInventoryChangeTest {
 
     }
 
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testExceptionInsufficientCoinageNoCoins() {
+
+        coins = new HashMap<>();
+        coins.put(Coin.ONE_POUND,0);
+        coins.put(Coin.FIFTY_PENCE,0);
+        coins.put(Coin.TWENTY_PENCE,0);
+        coins.put(Coin.TEN_PENCE,0);
+        coins.put(Coin.FIVE_PENCE,0);
+        coins.put(Coin.TWO_PENCE,0);
+        coins.put(Coin.ONE_PENNY,0);
+
+        FilesUtil.writeCoinsValuesToFile(COIN_INVENTORY_PATH, coins);
+        service.getCoinsMap();
+
+       service.getChangeFor(10);
+
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testExceptionInsufficientCoinage() {
+
+        coins = new HashMap<>();
+        coins.put(Coin.ONE_POUND,0);
+        coins.put(Coin.FIFTY_PENCE,10);
+        coins.put(Coin.TWENTY_PENCE,0);
+        coins.put(Coin.TEN_PENCE,0);
+        coins.put(Coin.FIVE_PENCE,0);
+        coins.put(Coin.TWO_PENCE,0);
+        coins.put(Coin.ONE_PENNY,0);
+
+        FilesUtil.writeCoinsValuesToFile(COIN_INVENTORY_PATH, coins);
+        service.getCoinsMap();
+
+        service.getChangeFor(60);
+
+    }
 }
