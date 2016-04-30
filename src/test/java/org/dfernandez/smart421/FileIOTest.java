@@ -107,11 +107,7 @@ public class FileIOTest {
         coinsExpected.put(Coin.TWO_PENCE,66);
         coinsExpected.put(Coin.ONE_PENNY,77);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("100=11\n").append("50=22\n").append("20=33\n").append("10=44\n").append("5=55\n").append("2=66\n").append("1=77\n");
-
-
-        FilesUtil.writeCoinsValuesToFile(COIN_INVENTORY_WRITE_PATH, sb.toString());
+        FilesUtil.writeCoinsValuesToFile(COIN_INVENTORY_WRITE_PATH, coinsExpected);
 
         Map<Coin, Integer> coinsResult = FilesUtil.readCoinsValuesFromFile(COIN_INVENTORY_WRITE_PATH);
 
