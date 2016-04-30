@@ -69,4 +69,6 @@ public class VendorMachineOptimalChangeTest {
         expectedChange.add(Coin.ONE_PENNY);
         assertThat(expectedChange, equalTo(service.getOptimalChangeFor(101)));
     }
+
+
 }

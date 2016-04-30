@@ -34,7 +34,6 @@ public class VendorMachineServiceImpl implements VendorMachineService {
 
         getChange(pence,false, changeReturn, true);
 
-
         return changeReturn;
     }
 
@@ -50,9 +49,10 @@ public class VendorMachineServiceImpl implements VendorMachineService {
 
         if(getChange(pence,true, changeReturn, false) ) {
             getChange(pence,false, changeReturn, false);
-        }
+            return changeReturn;
 
-        return changeReturn;
+        }
+        throw new IllegalArgumentException("Insufficient coins!!");
     }
 
     /**
@@ -64,15 +64,23 @@ public class VendorMachineServiceImpl implements VendorMachineService {
         return  coinsMap;
     }
 
+    /**
+     *
+     * @param pence
+     * @param isMock
+     * @param outList
+     * @param isUnlimited
+     * @return  true if  the system is able to return the exact change, and if is able to, it will change outList
+     */
     private boolean getChange(int pence, boolean isMock, List<Coin> outList, boolean isUnlimited) {
         int amountLeft = pence;
 
         // Flag for Unlimited coins
         boolean flagAmount = true;
 
-        // Assume an unlimited supply of coins
+
         for(Coin coin: Coin.values()) {
-            // If we need to check the  number of coins
+            // If  we don't assume an unlimited supply of coins
             if(!isUnlimited) {
                 flagAmount = getCoinAmount(coin) >0;
             }
@@ -86,24 +94,27 @@ public class VendorMachineServiceImpl implements VendorMachineService {
                 // Update Coin Repository Values
                 if(isMock == false && !isUnlimited) {
                     updateCoins(coin, -1);
+                    flagAmount = getCoinAmount(coin) > 0;
                 }
             }
         }
 
-        return amountLeft ==0;
+        return amountLeft == 0;
     }
 
 
+    // Update Map with Files Value
     private void refreshCoinRepo(String path) {
         coinsMap = FilesUtil.readCoinsValuesFromFile(path);
     }
 
 
-
+    // Return Coin amount
     private int getCoinAmount(Coin coin) {
         return coinsMap.get(coin);
     }
 
+    // Update Coins Values
     private void updateCoins(Coin coin, int amount) {
         // Update Map
         coinsMap.put(coin, amount + getCoinAmount(coin));
@@ -111,23 +122,9 @@ public class VendorMachineServiceImpl implements VendorMachineService {
         writeCoinsValuesToFile(pathToCoinRepo, coinsMap);
     }
 
+    // Update File Value
     private void writeCoinsValuesToFile(String path, Map<Coin, Integer> map) {
         FilesUtil.writeCoinsValuesToFile(path,map);
     }
-    /*
-    @Override
-    public void refreshCoinRepo(String path) {
-        coinsMap = FilesUtil.readCoinsValuesFromFile(path);
-    }
 
-    @Override
-    public Map<Coin, Integer> readCoinsValuesFromFile(String path) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void writeCoinsValuesToFile(String path, Map<Coin, Integer> map) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-    */
 }
