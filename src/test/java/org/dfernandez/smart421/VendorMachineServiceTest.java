@@ -27,9 +27,7 @@ public class VendorMachineServiceTest {
 
     @Test
     public void testChangeForZeroPence() {
-
         expectedChange = new ArrayList<>();
-
         assertThat(expectedChange, equalTo(service.getOptimalChangeFor(0)));
     }
 
@@ -37,7 +35,6 @@ public class VendorMachineServiceTest {
     public void testChangeForOnePenny() {
         expectedChange = new ArrayList<>();
         expectedChange.add(Coin.ONE_PENNY);
-
         assertThat(expectedChange, equalTo(service.getOptimalChangeFor(1)));
     }
 
@@ -45,7 +42,31 @@ public class VendorMachineServiceTest {
     public void testChangeForTwoPence() {
         expectedChange = new ArrayList<>();
         expectedChange.add(Coin.TWO_PENCE);
-
         assertThat(expectedChange, equalTo(service.getOptimalChangeFor(2)));
+    }
+
+    @Test
+    public void testChangeForFivePence() {
+        expectedChange = new ArrayList<>();
+        expectedChange.add(Coin.FIVE_PENCE);
+        assertThat(expectedChange, equalTo(service.getOptimalChangeFor(5)));
+    }
+
+
+    @Test
+    public void testChangeForTwentyThreePence() {
+        expectedChange = new ArrayList<>();
+        expectedChange.add(Coin.TWENTY_PENCE);
+        expectedChange.add(Coin.TWO_PENCE);
+        expectedChange.add(Coin.ONE_PENNY);
+        assertThat(expectedChange, equalTo(service.getOptimalChangeFor(23)));
+    }
+
+    @Test
+    public void testChangeForOnePoundOnePenny() {
+        expectedChange = new ArrayList<>();
+        expectedChange.add(Coin.ONE_POUND);
+        expectedChange.add(Coin.ONE_PENNY);
+        assertThat(expectedChange, equalTo(service.getOptimalChangeFor(101)));
     }
 }

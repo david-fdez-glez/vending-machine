@@ -9,20 +9,26 @@ import java.util.List;
 
 public class VendorMachineServiceImpl implements VendorMachineService {
 
+    /**
+     * Return the least number of coins possible
+     *
+     * @param pence integer
+     * @return Collection of coins(optimal change)
+     */
     @Override
     public Collection<Coin> getOptimalChangeFor(int pence) {
 
-        List<Coin> changeList = new ArrayList<>();
+        List<Coin> changeReturn = new ArrayList<>();
 
         int amountLeft = pence;
 
+        // Assume an unlimited supply of coins
         for(Coin coin: Coin.values()){
-
             while(amountLeft >= coin.getDenomination()) {
                 amountLeft -= coin.getDenomination();
-                changeList.add(coin);
+                changeReturn.add(coin);
             }
         }
-        return changeList;
+        return changeReturn;
     }
 }

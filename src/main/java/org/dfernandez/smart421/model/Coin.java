@@ -11,6 +11,7 @@ public enum Coin {
     TWO_PENCE(2),
     ONE_PENNY(1);
 
+    // Restriction property denomination
     private final int denomination;
 
     private Coin(int denomination) {
