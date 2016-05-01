@@ -5,14 +5,15 @@ These instructions assume that you already have installed Java 8
 
 ---- COMPILE AND RUN ON THE COMMAND LINE ----
 
-cd <directory>
+cd < directory >
 
 mvn clean install
 
 java -jar target/vending-machine-1.0-SNAPSHOT.jar
 
 ---- Run test ----
-  d <directory>
+
+  cd < directory >
 
   mvn test
 
