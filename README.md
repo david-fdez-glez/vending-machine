@@ -11,6 +11,10 @@ mvn clean install
 
 java -jar target/vending-machine-1.0-SNAPSHOT.jar
 
+---- Run test ----
+  d <directory>
+
+  mvn test
 
 ---- RUN IN AN IDE ----
 
