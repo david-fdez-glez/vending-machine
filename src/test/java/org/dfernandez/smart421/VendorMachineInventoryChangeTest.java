@@ -1,5 +1,6 @@
 package org.dfernandez.smart421;
 
+import org.dfernandez.smart421.exception.InsufficientCoinageException;
 import org.dfernandez.smart421.model.Coin;
 import org.dfernandez.smart421.service.VendorMachineService;
 import org.dfernandez.smart421.service.VendorMachineServiceImpl;
@@ -33,14 +34,14 @@ public class VendorMachineInventoryChangeTest {
 
 
     @Test
-    public void testChangeForZeroPence() {
+    public void testChangeForZeroPence() throws InsufficientCoinageException{
         expectedChange = new ArrayList<>();
         assertThat(expectedChange, equalTo(service.getChangeFor(0)));
     }
 
 
     @Test
-    public void testChangeForFivePenceWithoutTwoPenceCoins() {
+    public void testChangeForFivePenceWithoutTwoPenceCoins() throws InsufficientCoinageException{
 
         coins = new HashMap<>();
         coins.put(Coin.ONE_POUND,11);
@@ -67,7 +68,7 @@ public class VendorMachineInventoryChangeTest {
     }
 
     @Test
-    public void testChangeForFortyTwoPenceWithoutTwentyPenceAndTwoTenPenceCoins() {
+    public void testChangeForFortyTwoPenceWithoutTwentyPenceAndTwoTenPenceCoins() throws InsufficientCoinageException{
 
         coins = new HashMap<>();
         coins.put(Coin.ONE_POUND,11);
@@ -102,7 +103,7 @@ public class VendorMachineInventoryChangeTest {
     }
 
     @Test
-    public void testChangeForOnePoundWithoutOnePoundAndOneFiftyPenceCoins() {
+    public void testChangeForOnePoundWithoutOnePoundAndOneFiftyPenceCoins() throws InsufficientCoinageException{
 
         coins = new HashMap<>();
         coins.put(Coin.ONE_POUND,0);
@@ -135,8 +136,8 @@ public class VendorMachineInventoryChangeTest {
     }
 
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testExceptionInsufficientCoinageNoCoins() {
+    @Test(expected=InsufficientCoinageException.class)
+    public void testExceptionInsufficientCoinageNoCoins() throws InsufficientCoinageException{
 
         coins = new HashMap<>();
         coins.put(Coin.ONE_POUND,0);
@@ -154,8 +155,8 @@ public class VendorMachineInventoryChangeTest {
 
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testExceptionInsufficientCoinage() {
+    @Test(expected=InsufficientCoinageException.class)
+    public void testExceptionInsufficientCoinage() throws InsufficientCoinageException{
 
         coins = new HashMap<>();
         coins.put(Coin.ONE_POUND,0);

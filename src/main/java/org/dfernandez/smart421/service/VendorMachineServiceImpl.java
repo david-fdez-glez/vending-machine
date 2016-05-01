@@ -1,6 +1,7 @@
 package org.dfernandez.smart421.service;
 
 
+import org.dfernandez.smart421.exception.InsufficientCoinageException;
 import org.dfernandez.smart421.model.Coin;
 import org.dfernandez.smart421.util.FilesUtil;
 
@@ -43,18 +44,22 @@ public class VendorMachineServiceImpl implements VendorMachineService {
      * @return
      */
     @Override
-    public Collection<Coin> getChangeFor(int pence) {
+    public Collection<Coin> getChangeFor(int pence) throws InsufficientCoinageException {
+     //  try {
+           // Update Coins Values
+           refreshCoinRepo(pathToCoinRepo);
+           List<Coin> changeReturn = new ArrayList<>();
 
-        // Update Coins Values
-        refreshCoinRepo(pathToCoinRepo);
-        List<Coin> changeReturn = new ArrayList<>();
+           if(getChange(pence,true, changeReturn, false) ) {
+               getChange(pence,false, changeReturn, false);
+               return changeReturn;
 
-        if(getChange(pence,true, changeReturn, false) ) {
-            getChange(pence,false, changeReturn, false);
-            return changeReturn;
+           }
+           throw new InsufficientCoinageException("Insufficient coins!!");
+      // } catch(InsufficientCoinageException excpetion) {
 
-        }
-        throw new IllegalArgumentException("Insufficient coins!!");
+       //}
+
     }
 
     /**
