@@ -20,7 +20,7 @@ public class App
     public static void main( String[] args )
     {
 
-        try {
+        //try {
             VendorMachineService vendorMachineServicePart1 = new VendorMachineServiceImpl();
             VendorMachineService vendorMachineServicePart2 = new VendorMachineServiceImpl(Constants.COIN_INVENTORY_PATH);
 
@@ -35,19 +35,23 @@ public class App
 
 
             while(in.hasNextInt()) {
+               try {
+                   entry = in.nextInt();
 
-                entry = in.nextInt();
+                   coinsResultList = vendorMachineServicePart1.getOptimalChangeFor(entry);
+                   System.out.println( "Part 1: Optimal Change for " +entry + " pence is " +coinsResultList);
+                   coinsResultList = vendorMachineServicePart2.getChangeFor(entry);
+                   System.out.println( "Part 2: Optimal Change for " +entry + " pence is " +coinsResultList);
+
+               }  catch (InsufficientCoinageException exception){
+                   System.out.println("Part 2: " + exception.getMessage());
+               }
+               System.out.println("\nType number of pence to see the optimal change. (Any character will exit)" );
 
 
-                coinsResultList = vendorMachineServicePart1.getOptimalChangeFor(entry);
-                System.out.println( "Part 1: (Assume an unlimited supply of coins) Optimal Change for " +entry + " pence is " +coinsResultList);
-                coinsResultList = vendorMachineServicePart2.getChangeFor(entry);
-                System.out.println( "Part 2: (Available coins in coin-inventory.properties) Optimal Change for " +entry + " pence is " +coinsResultList);
-
-                System.out.println( "Type number of pence to see the optimal change. (Any character will exit)" );
             }
-        } catch (InsufficientCoinageException exception) {
-            System.out.println(exception.getMessage());
-        }
+       // } catch (InsufficientCoinageException exception) {
+       //     System.out.println("Part 2: " +exception.getMessage());
+       // }
     }
 }

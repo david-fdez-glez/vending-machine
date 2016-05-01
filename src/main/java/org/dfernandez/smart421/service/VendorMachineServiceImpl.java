@@ -45,20 +45,16 @@ public class VendorMachineServiceImpl implements VendorMachineService {
      */
     @Override
     public Collection<Coin> getChangeFor(int pence) throws InsufficientCoinageException {
-     //  try {
-           // Update Coins Values
-           refreshCoinRepo(pathToCoinRepo);
-           List<Coin> changeReturn = new ArrayList<>();
 
-           if(getChange(pence,true, changeReturn, false) ) {
-               getChange(pence,false, changeReturn, false);
-               return changeReturn;
+        // Update Coins Values
+        refreshCoinRepo(pathToCoinRepo);
+        List<Coin> changeReturn = new ArrayList<>();
 
-           }
-           throw new InsufficientCoinageException("Insufficient coins!!");
-      // } catch(InsufficientCoinageException excpetion) {
-
-       //}
+        if(getChange(pence,true, changeReturn, false) ) {
+            getChange(pence,false, changeReturn, false);
+            return changeReturn;
+        }
+        throw new InsufficientCoinageException("Insufficient Coinage for " + pence + " pence");
 
     }
 
