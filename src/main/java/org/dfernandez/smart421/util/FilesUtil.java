@@ -38,7 +38,12 @@ public class FilesUtil {
     }
 
 
-
+    /**
+     * Read Coin Inventory Values from File.
+     * I'm assuming the file has right format and all necessary values
+     * @param path
+     * @return
+     */
     public static Map<Coin, Integer> readCoinsValuesFromFile(String path) {
 
         Map<Coin,Integer> coins = new HashMap<>();
@@ -95,8 +100,6 @@ public class FilesUtil {
         sb.append("100=").append(map.get(Coin.ONE_POUND)).append("\n50=").append(map.get(Coin.FIFTY_PENCE)).append("\n20=").append(map.get(Coin.TWENTY_PENCE));
         sb.append("\n10=").append(map.get(Coin.TEN_PENCE)).append("\n5=").append(map.get(Coin.FIVE_PENCE)).append("\n2=").append(map.get(Coin.TWO_PENCE));
         sb.append("\n1=").append(map.get(Coin.ONE_PENNY));
-
-
 
         writeToTextFile(path, sb.toString());
     }

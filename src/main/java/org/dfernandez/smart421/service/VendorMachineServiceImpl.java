@@ -5,7 +5,10 @@ import org.dfernandez.smart421.exception.InsufficientCoinageException;
 import org.dfernandez.smart421.model.Coin;
 import org.dfernandez.smart421.util.FilesUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class VendorMachineServiceImpl implements VendorMachineService {
 
@@ -52,6 +55,8 @@ public class VendorMachineServiceImpl implements VendorMachineService {
 
         if(getChange(pence,true, changeReturn, false) ) {
             getChange(pence,false, changeReturn, false);
+            // Update Coin Inventory
+            writeCoinsValuesToFile(pathToCoinRepo, coinsMap);
             return changeReturn;
         }
         throw new InsufficientCoinageException("Insufficient Coinage for " + pence + " pence");
@@ -59,7 +64,7 @@ public class VendorMachineServiceImpl implements VendorMachineService {
     }
 
     /**
-     * Refresh Coin Inventory
+     * Return coins inventory
      * @return
      */
     public Map<Coin, Integer> getCoinsMap() {
@@ -73,7 +78,7 @@ public class VendorMachineServiceImpl implements VendorMachineService {
      * @param isMock
      * @param outList
      * @param isUnlimited
-     * @return  true if  the system is able to return the exact change, and if is able to, it will change outList
+     * @return  true if  the system is able to return the exact change, and if is able to, it will update outList
      */
     private boolean getChange(int pence, boolean isMock, List<Coin> outList, boolean isUnlimited) {
         int amountLeft = pence;
@@ -106,26 +111,40 @@ public class VendorMachineServiceImpl implements VendorMachineService {
     }
 
 
-    // Update Map with Files Value
+
+    /**
+     * Refresh Map Coins with File Coins inventory
+     * @param path
+     */
     private void refreshCoinRepo(String path) {
         coinsMap = FilesUtil.readCoinsValuesFromFile(path);
     }
 
 
-    // Return Coin amount
+    /**
+     * get Map Coins Number
+     * @param coin
+     * @return
+     */
     private int getCoinAmount(Coin coin) {
         return coinsMap.get(coin);
     }
 
-    // Update Coins Values
+
+    /**
+     *    Update Map Coins Values
+     * @param coin
+     * @param amount
+     */
     private void updateCoins(Coin coin, int amount) {
-        // Update Map
         coinsMap.put(coin, amount + getCoinAmount(coin));
-        // Update File
-        writeCoinsValuesToFile(pathToCoinRepo, coinsMap);
     }
 
-    // Update File Value
+    /**
+     * Update File Coin Inventory
+     * @param path
+     * @param map
+     */
     private void writeCoinsValuesToFile(String path, Map<Coin, Integer> map) {
         FilesUtil.writeCoinsValuesToFile(path,map);
     }

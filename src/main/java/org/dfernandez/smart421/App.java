@@ -6,21 +6,15 @@ import org.dfernandez.smart421.service.VendorMachineService;
 import org.dfernandez.smart421.service.VendorMachineServiceImpl;
 import org.dfernandez.smart421.util.Constants;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
     public static void main( String[] args )
     {
 
-        //try {
             VendorMachineService vendorMachineServicePart1 = new VendorMachineServiceImpl();
             VendorMachineService vendorMachineServicePart2 = new VendorMachineServiceImpl(Constants.COIN_INVENTORY_PATH);
 
@@ -48,10 +42,7 @@ public class App
                }
                System.out.println("\nType number of pence to see the optimal change. (Any character will exit)" );
 
-
             }
-       // } catch (InsufficientCoinageException exception) {
-       //     System.out.println("Part 2: " +exception.getMessage());
-       // }
+
     }
 }
